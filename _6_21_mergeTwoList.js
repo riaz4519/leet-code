@@ -9,60 +9,55 @@ const mergeTwoLists = (list1, list2) => {
   let head;
   let current;
 
-  while (list1 !== null || list2 !== null) {
-    console.log("dat");
-    if (list1 && list2) {
+  while (list1 || list2) {
+    if (!head) {
       if (list1.val <= list2.val) {
-        if (!head) {
-          head = list1;
-          current = head;
-          list1 = list1.next;
-        } else {
-          current.next = list1;
-          list1 = list1.next;
-        }
+        current = new ListNode(list1.val);
+        list1 = list1.next;
       } else {
-        if (!head) {
-          head = list2;
-          current = head;
-          list2 = list2.next;
-        } else {
-          current.next = list2;
-          list2 = list2.next;
-        }
+        current = new ListNode(list2.val);
+        list2 = list2.next;
+      }
+      head = current;
+      continue;
+    } else if (list1 && list2) {
+      if (list1.val <= list2.val) {
+        current.next = new ListNode(list1.val);
+        list1 = list1.next;
+        current = current.next;
+      } else {
+        current.next = new ListNode(list2.val);
+        list2 = list2.next;
+        current = current.next;
       }
     } else if (list1) {
-      if (!head) {
-        head = list1;
-        current = head;
-        list1 = list1.next;
-      } else {
-        current.next = list1;
-        list1 = list1.next;
-      }
-    } else if (list2) {
-      if (!head) {
-        head = list2;
-        current = head;
-        list2 = list2.next;
-      } else {
-        current.next = list2;
-        list2 = list2.next;
-      }
+      current.next = new ListNode(list1.val);
+      list1 = list1.next;
+      current = current.next;
+    } else {
+      current.next = new ListNode(list2.val);
+      list2 = list2.next;
+      current = current.next;
     }
-
-   
-
   }
   return head;
 };
 let list1 = new ListNode(1);
 list1.next = new ListNode(2);
-list1.next = new ListNode(4);
+list1.next.next = new ListNode(4);
 
-let list2 = new ListNode(5)
-list2.next = new ListNode(6);
-list2.next = new ListNode(7);
+let list2 = new ListNode(2);
+list2.next = new ListNode(3);
+list2.next.next = new ListNode(5);
 
-console.log(mergeTwoLists(list1,list2));
-//console.log(new ListNode(10));
+function itter(listmer){
+
+  while(listmer){
+    console.log(listmer.val);
+    listmer = listmer.next;
+  }
+
+}
+
+itter(mergeTwoLists(list1, list2));
+//console.log(list1, list2);
